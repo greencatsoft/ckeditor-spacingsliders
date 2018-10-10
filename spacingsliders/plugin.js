@@ -79,22 +79,22 @@ CKEDITOR.plugins.add( 'spacingsliders', {
 } );
 
 CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
-    $: function( settings, editor ) {
-    	this.settings = settings;
-    	this.editor = editor;
-    	this.definition = editor.config[ 'spacingsliders_' + settings.name + 'Style' ];
-    },
-    proto: {
-    	getValue: function() {
-    		if ( !this.element ) return;
+	$: function( settings, editor ) {
+		this.settings = settings;
+		this.editor = editor;
+		this.definition = editor.config[ 'spacingsliders_' + settings.name + 'Style' ];
+	},
+	proto: {
+		getValue: function() {
+			if ( !this.element ) return;
 
-    		return this.input.$.value;
-    	},
-    	setValue: function( value ) {
-    		if ( !this.element ) return;
+			return this.input.$.value;
+		},
+		setValue: function( value ) {
+			if ( !this.element ) return;
 
 			this.input.$.value = value;
-    		this.label.setHtml( value );
+			this.label.setHtml( value );
 
 			var style = new CKEDITOR.style( this.definition, { size: value } );
 
@@ -107,12 +107,12 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 
 				this.editor.fire( 'saveSnapshot' );
 			}
-    	},
-    	isEnabled: function () {
-    		return this.element && this.input.$.disabled !== true;
-    	},
-    	setEnabled: function ( value ) {
-    		if ( !this.element ) return;
+		},
+		isEnabled: function () {
+			return this.element && this.input.$.disabled !== true;
+		},
+		setEnabled: function ( value ) {
+			if ( !this.element ) return;
 
 			this.input.$.disabled = !value;
 
@@ -123,8 +123,8 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 				this.label.setHtml( '-' );
 				this.input.value = 0;
 			}
-    	},
-        render: function( parent ) {
+		},
+		render: function( parent ) {
 			var onChange = CKEDITOR.tools.addFunction( function ( value ) {
 				this.setValue( value );
 			}, this );
@@ -164,9 +164,9 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 
 			this.input = parent.findOne( '#' + this.settings.name + ' input' );
 			this.label = parent.findOne( '#' + this.settings.name + ' span' );
-        },
-        update: function( path, block ) {
-        	var value = this.definition.getStyleValue( path, block );
+		},
+		update: function( path, block ) {
+			var value = this.definition.getStyleValue( path, block );
 
 			if ( parseFloat( value ) === value ) {
 				var rounded = Math.round( value * 10 ) / 10;
@@ -174,12 +174,12 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 				this.setEnabled( true );
 
 				this.input.$.value = rounded;
-    			this.label.setHtml( rounded);
+				this.label.setHtml( rounded);
 			} else {
 				this.setEnabled( false );
 			}
-        }
-    }
+		}
+	}
 });
 
 /**
