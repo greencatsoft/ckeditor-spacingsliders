@@ -115,8 +115,6 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 				if ( locked ) {
 					selection.lock();
 				}
-
-				this.editor.fire( 'saveSnapshot' );
 			}
 		},
 		isEnabled: function () {
@@ -136,8 +134,12 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 			}
 		},
 		render: function( parent ) {
-			var onChange = CKEDITOR.tools.addFunction( function ( value ) {
+			var onChange = CKEDITOR.tools.addFunction( function ( value, saveSnapshot ) {
 				this.setValue( value );
+
+				if ( saveSnapshot ) {
+					this.editor.fire( 'saveSnapshot' );
+				}
 			}, this );
 
 			var lang = this.editor.lang.spacingsliders;
@@ -155,6 +157,9 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 			output.push( ' oninput="CKEDITOR.tools.callFunction( ' );
 			output.push( onChange );
 			output.push( ', this.value );" ' );
+			output.push( ' onchange="CKEDITOR.tools.callFunction( ' );
+			output.push( onChange );
+			output.push( ', this.value, true );" ' );
 			output.push( 'step="' );
 			output.push( this.settings.step || 1 );
 			output.push( '" ' );
