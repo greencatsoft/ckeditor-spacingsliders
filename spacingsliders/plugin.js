@@ -99,10 +99,21 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 			var style = new CKEDITOR.style( this.definition, { size: value } );
 
 			if ( style.checkApplicable( this.editor.elementPath(), this.editor ) ) {
+				var selection = this.editor.getSelection();
+				var locked = selection.isLocked;
+
+				if ( locked ) {
+					selection.unlock();
+				}
+
 				this.editor.removeStyle( new CKEDITOR.style( this.definition, { size: 'inherit' } ) );
 
 				if ( value ) {
 					this.editor.applyStyle( style );
+				}
+
+				if ( locked ) {
+					selection.lock();
 				}
 
 				this.editor.fire( 'saveSnapshot' );
