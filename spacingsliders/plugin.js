@@ -147,7 +147,7 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 
 			output.push( '<div id="' );
 			output.push( this.settings.name );
-			output.push( '" class="cke_spacingcontrol">' );
+			output.push( '" class="cke_spacingcontrol" title="">' );
 			output.push( '<label>' );
 			output.push( lang.labels[ this.settings.name ] );
 			output.push( '</label>' );
