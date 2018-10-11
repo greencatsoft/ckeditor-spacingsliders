@@ -216,7 +216,7 @@ CKEDITOR.config.spacingsliders_lineheightStyle = {
  * @member CKEDITOR.config
  */
 CKEDITOR.config.spacingsliders_letterspacingStyle = {
-	element: 'span',
+	element: 'div',
 	styles: { 'letter-spacing': '#(size)px' },
 	getStyleValue: function( path, block ) {
 		var elem = path.lastElement;
