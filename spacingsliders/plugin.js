@@ -35,6 +35,13 @@ CKEDITOR.plugins.add( 'spacingsliders', {
 				editor )
 		};
 
+		var styles = [];
+
+		for ( name in controls ) {
+			var control = controls[name];
+			styles.push( control.createStyle() );
+		}
+
 		editor.ui.add( 'spacingsliders', CKEDITOR.UI_PANELBUTTON, {
 			label: lang.title,
 			title: lang.title,
@@ -43,6 +50,7 @@ CKEDITOR.plugins.add( 'spacingsliders', {
 			},
 			editorFocus: 0,
 			toolbar: 'styles,' + 40,
+			allowedContent: styles,
 			panel: {
 				css: CKEDITOR.skin.getPath( 'editor' ),
 				attributes: {
@@ -85,6 +93,10 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 		this.definition = editor.config[ 'spacingsliders_' + settings.name + 'Style' ];
 	},
 	proto: {
+		createStyle: function( size ) {
+			var args = size ? { size: size } : undefined;
+			return new CKEDITOR.style( this.definition, args );
+		},
 		getValue: function() {
 			if ( !this.element ) return;
 
@@ -96,7 +108,7 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 			this.input.$.value = value;
 			this.label.setHtml( value );
 
-			var style = new CKEDITOR.style( this.definition, { size: value } );
+			var style = this.createStyle( value );
 
 			if ( style.checkApplicable( this.editor.elementPath(), this.editor ) ) {
 				var selection = this.editor.getSelection();
