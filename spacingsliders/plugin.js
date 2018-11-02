@@ -8,7 +8,7 @@
  */
 CKEDITOR.plugins.add( 'spacingsliders', {
 	requires: 'panelbutton,floatpanel',
-	lang: 'en,ko', // %REMOVE_LINE_CORE%
+	lang: 'en,ko,uk', // %REMOVE_LINE_CORE%
 	icons: 'spacingsliders', // %REMOVE_LINE_CORE%
 	hidpi: false, // %REMOVE_LINE_CORE%
 	init: function( editor ) {
