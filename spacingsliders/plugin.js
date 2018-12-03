@@ -29,7 +29,7 @@ CKEDITOR.plugins.add( 'spacingsliders', {
 			letterspacing: new CKEDITOR.spacingControl( 
 				{
 					name: 'letterspacing', 
-					min: -20,
+					min: 0,
 					max: 20
 				},
 				editor )
