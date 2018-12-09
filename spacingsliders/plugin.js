@@ -80,8 +80,6 @@ CKEDITOR.plugins.add( 'spacingsliders', {
 					block = selection && selection.getStartElement(),
 					path = editor.elementPath( block );
 
-				if ( !path ) return;
-
 				for ( var id in controls ) {
 					controls[id].update( path, block );
 				}
@@ -113,8 +111,9 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 			this.label.setHtml( value );
 
 			var style = this.createStyle( value );
+			var path = this.editor.elementPath();
 
-			if ( style.checkApplicable( this.editor.elementPath(), this.editor ) ) {
+			if ( path && style.checkApplicable( path, this.editor ) ) {
 				var selection = this.editor.getSelection();
 				var locked = selection.isLocked;
 
@@ -198,7 +197,7 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 			this.label = parent.findOne( '#' + this.settings.name + ' span' );
 		},
 		update: function( path, block ) {
-			var value = this.definition.getStyleValue( path, block );
+			var value = path ? this.definition.getStyleValue( path, block ) : undefined;
 
 			if ( parseFloat( value ) === value ) {
 				var rounded = Math.round( value * 10 ) / 10;
