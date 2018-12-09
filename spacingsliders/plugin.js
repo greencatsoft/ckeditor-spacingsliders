@@ -17,20 +17,24 @@ CKEDITOR.plugins.add( 'spacingsliders', {
 
 		var cssPath = this.path + 'skins/default.css';
 
+		var getConfig = function( value, defaultValue) {
+			return value === undefined ? defaultValue : value;
+		};
+
 		var controls = {
 			lineheight: new CKEDITOR.spacingControl( 
 				{
 					name: 'lineheight', 
-					min: 0,
-					max: 4,
-					step: 0.1
+					min: getConfig( CKEDITOR.config.lineheight_min, 0 ),
+					max: getConfig( CKEDITOR.config.lineheight_max, 3 ),
+					step: getConfig( CKEDITOR.config.lineheight_step, 0.1 )
 				},
 				editor ),
 			letterspacing: new CKEDITOR.spacingControl( 
 				{
 					name: 'letterspacing', 
-					min: -20,
-					max: 20
+					min: getConfig( CKEDITOR.config.letterspacing_min, -20 ),
+					max: getConfig( CKEDITOR.config.letterspacing_max, 20 )
 				},
 				editor )
 		};
@@ -251,3 +255,34 @@ CKEDITOR.config.spacingsliders_letterspacingStyle = {
 		}
 	}
 };
+
+/**
+ * Minimum value for line height.
+ * @cfg {Number} [lineheight_min=0]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * Maximum value for line height.
+ * @cfg {Number} [lineheight_max=4]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * Interval (step) to be used for line height control.
+ * @cfg {Number} [lineheight_step=0.1]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * Minimum value for letter spacing.
+ * @cfg {Number} [letterspacing_min=-20]
+ * @member CKEDITOR.config
+ */
+
+/**
+ * Maximum value for letter spacing.
+ * @cfg {Number} [letterspacing_max=20]
+ * @member CKEDITOR.config
+ */
+
