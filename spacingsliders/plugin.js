@@ -115,17 +115,40 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 
 			if ( path && style.checkApplicable( path, this.editor ) ) {
 				var selection = this.editor.getSelection();
+				var ranges = selection.getRanges();
+
+				var bookmarks = selection.createBookmarks();
 				var locked = selection.isLocked;
+				var enterMode = this.editor.config.enterMode;
 
 				if ( locked ) {
 					selection.unlock();
 				}
 
-				this.editor.removeStyle( new CKEDITOR.style( this.definition, { size: 'inherit' } ) );
+				for ( var i = ranges.length - 1; i >= 0; i-- ) {
+					var it = ranges[ i ].createIterator();
 
-				if ( value ) {
-					this.editor.applyStyle( style );
+					it.enlargeBr = enterMode != CKEDITOR.ENTER_BR;
+
+					while ( ( block = it.getNextParagraph( enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' ) ) ) {
+						if ( block.isReadOnly() ) {
+							continue;
+						}
+
+						this.editor.removeStyle( new CKEDITOR.style( this.definition, { size: 'inherit' } ) );
+
+						if ( value ) {
+							var values = CKEDITOR.style.getStyleText( style._.definition ).split( ':' );
+
+							block.setStyle( values[0], values[1].replace(';', '') );
+						}
+					}
+
 				}
+
+				this.editor.forceNextSelectionCheck();
+
+				selection.selectBookmarks( bookmarks );
 
 				if ( locked ) {
 					selection.lock();
