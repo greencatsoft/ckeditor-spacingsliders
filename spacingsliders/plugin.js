@@ -135,12 +135,12 @@ CKEDITOR.spacingControl = CKEDITOR.tools.createClass({
 							continue;
 						}
 
-						this.editor.removeStyle( new CKEDITOR.style( this.definition, { size: 'inherit' } ) );
-
 						if ( value ) {
 							var values = CKEDITOR.style.getStyleText( style._.definition ).split( ':' );
 
 							block.setStyle( values[0], values[1].replace(';', '') );
+						} else {
+							block.removeStyle( values[0] );
 						}
 					}
 
